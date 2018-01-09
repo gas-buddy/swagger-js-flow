@@ -30,14 +30,14 @@
   "homepage": "https://github.com/gas-buddy/swagger-js-flow#readme",
   "dependencies": {
     "lodash": "^4.17.4",
-    "swagger-client": "^2.2.21"
+    "swagger-client": "^3.4.4"
   },
   "devDependencies": {
     "babel-cli": "^6.8.0",
     "babel-core": "^6.2.1",
     "babel-preset-gasbuddy": "^3.1.0",
     "eslint-config-gasbuddy": "^4.0.0",
-    "nyc": "^6.4.2",
-    "tap": "^7.0.0"
+    "nyc": "^11.4.1",
+    "tap": "^11.0.1"
   }
 }
