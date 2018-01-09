@@ -1,6 +1,8 @@
 swagger-js-flow
 ===============
 
+[![wercker status](https://app.wercker.com/status/ec4cc823e7a4bc1a6662fac1f3ff6aaf/s/master "wercker status")](https://app.wercker.com/project/byKey/ec4cc823e7a4bc1a6662fac1f3ff6aaf)
+
 A module that converts a swagger JSON file into flow types for use with the dynamic swagger-js client. This is mostly used in the GasBuddy service framework, and thus includes a mode to read services from a config directory. It can also just take a JSON spec filename or a module whose main export is a JSON swagger spec.
 
 Typically, you place this script in a postinstall step of your service, so that whenever your specs (may have) changed, you regenerate the type definitions.
