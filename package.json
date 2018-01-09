@@ -1,6 +1,6 @@
 {
   "name": "swagger-js-flow",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A module that converts a swagger JSON file into flow types for use with the dynamic swagger-js client",
   "main": "build/index.js",
   "scripts": {
@@ -29,7 +29,11 @@
   },
   "homepage": "https://github.com/gas-buddy/swagger-js-flow#readme",
   "dependencies": {
+    "confit": "^2.3.0",
     "lodash": "^4.17.4",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "shortstop-handlers": "^1.0.1",
     "swagger-client": "^2.2.21"
   },
   "devDependencies": {

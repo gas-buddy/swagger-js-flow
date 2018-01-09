@@ -7,6 +7,6 @@ tap.test('flow generation', async (t) => {
     spec: testSwagger,
     name: 'PetClient',
   });
-  console.error(resolved);
+  t.ok(resolved);
   t.end();
 });

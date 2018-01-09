@@ -16,14 +16,13 @@ const preamble = `class SwaggerResponse<T> {
   status: number;
   headers: object;
 };
-`
+`;
 
 function apis(client, fn) {
   for (const [tag, { operations }] of Object.entries(client.apis)) {
-    if (!operations) {
-      continue;
+    if (operations) {
+      fn(tag, operations);
     }
-    fn(tag, operations);
   }
 }
 
@@ -32,13 +31,14 @@ function ident(v) {
 }
 
 function flowType(def) {
-  if (def['$ref']) {
-    return def['$ref'].split('/').slice(-1);
+  if (def.$ref) {
+    return def.$ref.split('/').slice(-1);
   }
   if (def.type === 'array') {
     return `Array<${flowType(def.items)}>`;
   }
   if (!typeMap[def.type]) {
+    // eslint-disable-next-line no-console
     console.error('Unknown type (using "any"):', def.type);
   }
   return typeMap[def.type] || 'any';
@@ -61,14 +61,14 @@ export default async function generateFlowTypes({ spec, name }) {
       assert(model.definition.enum, `Expected ${modelName} to be an enumerated value`);
       lines.push(`export const ${modelName} {`);
       model.definition.enum.forEach(v => lines.push(`  ${ident(v)}: '${v}',`));
-      lines.push(`}`);
-      lines.push(`type ${modelName}Enum = $Values<${modelName}>;\n`)
+      lines.push('}');
+      lines.push(`type ${modelName}Enum = $Values<${modelName}>;\n`);
     } else {
       lines.push(`interface ${modelName} {`);
       for (const [prop, def] of Object.entries(model.definition.properties || {})) {
         lines.push(`  ${prop}: ${flowType(def)};`);
       }
-      lines.push(`}\n`);
+      lines.push('}\n');
     }
   }
 
@@ -86,9 +86,9 @@ export default async function generateFlowTypes({ spec, name }) {
     lines.push('}\n');
   });
 
-  lines.push(`interface ${name} {`);
+  lines.push(`export interface ${name} {`);
   // Generate all the tags
-  apis(client, (tag, operations) => {
+  apis(client, (tag) => {
     lines.push(`  ${tag}: ${name}_${tag};`);
   });
   lines.push('}\n');
