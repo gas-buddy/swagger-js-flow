@@ -1,6 +1,6 @@
 {
   "name": "swagger-js-flow",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A module that converts a swagger JSON file into flow types for use with the dynamic swagger-js client",
   "main": "build/index.js",
   "scripts": {
@@ -40,8 +40,8 @@
     "babel-cli": "^6.8.0",
     "babel-core": "^6.2.1",
     "babel-preset-gasbuddy": "^3.1.0",
-    "eslint-config-gasbuddy": "^4.0.0",
-    "nyc": "^6.4.2",
-    "tap": "^7.0.0"
+    "eslint-config-gasbuddy": "^4.1.0",
+    "nyc": "^11.4.1",
+    "tap": "^11.1.0"
   }
 }

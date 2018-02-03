@@ -59,7 +59,7 @@ export default async function generateFlowTypes({ spec, name }) {
     } else if (model.definition.type === 'string') {
       // Assume it's an enum
       assert(model.definition.enum, `Expected ${modelName} to be an enumerated value`);
-      lines.push(`export const ${modelName} {`);
+      lines.push(`export const ${modelName} = {`);
       model.definition.enum.forEach(v => lines.push(`  ${ident(v)}: '${v}',`));
       lines.push('}');
       lines.push(`type ${modelName}Enum = $Values<${modelName}>;\n`);
