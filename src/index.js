@@ -62,7 +62,7 @@ export default async function generateFlowTypes({ spec, name }) {
       lines.push(`export const ${modelName} = {`);
       model.definition.enum.forEach(v => lines.push(`  ${ident(v)}: '${v}',`));
       lines.push('}');
-      lines.push(`type ${modelName}Enum = $Values<${modelName}>;\n`);
+      lines.push(`type ${modelName}Enum = $Values<typeof ${modelName}>;\n`);
     } else {
       lines.push(`interface ${modelName} {`);
       for (const [prop, def] of Object.entries(model.definition.properties || {})) {

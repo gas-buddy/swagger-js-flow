@@ -1,6 +1,6 @@
 {
   "name": "swagger-js-flow",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A module that converts a swagger JSON file into flow types for use with the dynamic swagger-js client",
   "main": "build/index.js",
   "scripts": {
