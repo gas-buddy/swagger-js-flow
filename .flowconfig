@@ -1,0 +1,5 @@
+[ignore]
+[include]
+tests/output/*
+[libs]
+[options]
