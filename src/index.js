@@ -83,7 +83,11 @@ export default async function generateFlowTypes({ spec, name }) {
         respType = Object.values(details.successResponse)[0].definition;
       }
       lines.push(`  /* ${details.description || 'no description'} */`);
-      lines.push(`  ${methodName}() : SwaggerResponse<${flowType(respType)}>;\n`);
+      if (details.parameters && details.parameters.length) {
+        lines.push(`  ${methodName}({${details.parameters.map(p => `${p.name}: ${p.type}`)}}) : SwaggerResponse<${flowType(respType)}>;\n`);
+      } else {
+        lines.push(`  ${methodName}() : SwaggerResponse<${flowType(respType)}>;\n`);
+      }
     }
     lines.push('}\n');
   });

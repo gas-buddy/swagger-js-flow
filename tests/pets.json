@@ -62,6 +62,16 @@
         "tags": [
           "pets"
         ],
+        "parameters": [
+          {
+            "name": "pet",
+            "in": "body",
+            "type": {
+              "$ref": "#/definitions/Pet"
+            },
+            "required": true
+          }
+        ],
         "responses": {
           "201": {
             "description": "Null response"
@@ -95,7 +105,7 @@
           "200": {
             "description": "Expected response to a valid request",
             "schema": {
-              "$ref": "#/definitions/Pets"
+              "$ref": "#/definitions/Pet"
             }
           },
           "default": {
