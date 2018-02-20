@@ -25,25 +25,9 @@
         "tags": [
           "pets"
         ],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "How many items to return at one time (max 100)",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
         "responses": {
           "200": {
-            "description": "An paged array of pets",
-            "headers": {
-              "x-next": {
-                "type": "string",
-                "description": "A link to the next page of responses"
-              }
-            },
+            "description": "The list of available pets",
             "schema": {
               "$ref": "#/definitions/Pets"
             }
@@ -65,6 +49,7 @@
         "parameters": [
           {
             "name": "pet",
+            "description": "Details of the pet",
             "in": "body",
             "type": {
               "$ref": "#/definitions/Pet"
@@ -98,7 +83,7 @@
             "in": "path",
             "required": true,
             "description": "The id of the pet to retrieve",
-            "type": "string"
+            "type": "integer"
           }
         ],
         "responses": {
@@ -106,6 +91,139 @@
             "description": "Expected response to a valid request",
             "schema": {
               "$ref": "#/definitions/Pet"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/vaccinations": {
+      "get": {
+        "summary": "Info for a specific pet",
+        "tags": [
+          "pets",
+          "vaccinations"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "headers": {
+              "x-next": {
+                "type": "string",
+                "description": "A link to the next page of responses"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Vaccinations"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Submits a vaccination for this pet",
+        "tags": [
+          "pets",
+          "vaccinations"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "integer"
+          },
+          {
+            "name": "vaccination",
+            "description": "Details of the vaccination",
+            "in": "body",
+            "type": {
+              "$ref": "#/definitions/Vaccination"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Vaccination"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}/vaccinations/{vaccinationId}": {
+      "patch": {
+        "summary": "Updates a vaccination for this pet",
+        "tags": [
+          "pets",
+          "vaccinations"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "integer"
+          },
+          {
+            "name": "vaccinationId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the vaccination to update",
+            "type": "integer"
+          },
+          {
+            "name": "vaccination",
+            "description": "Updated details of the vaccination",
+            "in": "body",
+            "type": {
+              "$ref": "#/definitions/Vaccination"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Vaccination"
             }
           },
           "default": {
@@ -141,6 +259,33 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/Pet"
+      }
+    },
+    "Vaccination": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "follow_up": {
+          "type": "boolean"
+        },
+        "date_administered": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "Vaccinations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Vaccination"
       }
     },
     "Error": {

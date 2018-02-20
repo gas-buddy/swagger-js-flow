@@ -39,11 +39,15 @@ function flowType(def) {
   if (def.type === 'array') {
     return `Array<${flowType(def.items)}>`;
   }
-  if (!typeMap[def.type]) {
-    // eslint-disable-next-line no-console
-    console.error('Unknown type (using "any"):', def.type);
+  if (typeMap[def.type]) {
+    return typeMap[def.type];
   }
-  return typeMap[def.type] || 'any';
+  if (typeMap[def]) {
+    return typeMap[def];
+  }
+  // eslint-disable-next-line no-console
+  console.error('Unknown type (using "any"):', def);
+  return 'any';
 }
 
 export default async function generateFlowTypes({ spec, name }) {
@@ -78,16 +82,19 @@ export default async function generateFlowTypes({ spec, name }) {
   apis(client, (tag, operations) => {
     lines.push(`interface ${name}_${tag} {`);
     for (const [methodName, details] of Object.entries(operations || {})) {
-      let respType = { type: 'any' };
-      if (details.successResponse) {
-        respType = Object.values(details.successResponse)[0].definition;
-      }
       lines.push(`  /* ${details.description || 'no description'} */`);
+
+      let parameters = '';
       if (details.parameters && details.parameters.length) {
-        lines.push(`  ${methodName}({${details.parameters.map(p => `${p.name}: ${p.type}`)}}) : SwaggerResponse<${flowType(respType)}>;\n`);
-      } else {
-        lines.push(`  ${methodName}() : SwaggerResponse<${flowType(respType)}>;\n`);
+        parameters = `parameters: { ${details.parameters.map(p => `${p.name}: ${flowType(p.type)}`).join(', ')} }`;
       }
+
+      let responseType = 'void';
+      if (details.type && details.type.schema) {
+        responseType = flowType(details.type.schema);
+      }
+
+      lines.push(`  ${methodName}(${parameters}) : SwaggerResponse<${responseType}>;\n`);
     }
     lines.push('}\n');
   });
