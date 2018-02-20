@@ -86,7 +86,7 @@ export default async function generateFlowTypes({ spec, name }) {
 
       let parameters = '';
       if (details.parameters && details.parameters.length) {
-        parameters = `parameters: { ${details.parameters.map(p => `${p.name}: ${flowType(p.type)}`).join(', ')} }`;
+        parameters = `parameters: { ${details.parameters.map(p => `${p.name}${p.required ? '' : '?'}: ${flowType(p.type)}`).join(', ')} }`;
       }
 
       let responseType = 'void';
