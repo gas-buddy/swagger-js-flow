@@ -1,3 +1,6 @@
+#Test
+tests/output/*.js
+
 # Custom
 .transpiled
 .nyc_output

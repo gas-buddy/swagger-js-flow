@@ -11,10 +11,12 @@ const typeMap = {
   any: 'any',
 };
 
-const preamble = `class SwaggerResponse<T> {
+const preamble = `// @flow
+
+class SwaggerResponse<T> {
   obj: T;
   status: number;
-  headers: object;
+  headers: Object;
 };
 `;
 

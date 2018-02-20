@@ -4,7 +4,8 @@
   "description": "A module that converts a swagger JSON file into flow types for use with the dynamic swagger-js client",
   "main": "build/index.js",
   "scripts": {
-    "test": "tap --node-arg=-r --node-arg=babel-register tests/*.js",
+    "test": "tap --node-arg=-r --node-arg=babel-register tests/*.js && npm run after-test",
+    "after-test": "flow",
     "cover": "nyc --reporter=lcov npm test",
     "lint": "eslint .",
     "build": "babel src/ --out-dir build/",
@@ -41,6 +42,8 @@
     "babel-core": "^6.2.1",
     "babel-preset-gasbuddy": "^3.1.0",
     "eslint-config-gasbuddy": "^4.1.0",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "flow-bin": "^0.53.0",
     "nyc": "^11.4.1",
     "tap": "^11.1.0"
   }
