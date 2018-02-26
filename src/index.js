@@ -23,7 +23,7 @@ class SwaggerResponse<T> {
 function apis(client, fn) {
   for (const [tag, { operations }] of Object.entries(client.apis)) {
     if (operations) {
-      fn(tag, operations);
+      fn(tag.replace(/\s+/g, '_'), operations);
     }
   }
 }

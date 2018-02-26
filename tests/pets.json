@@ -23,7 +23,7 @@
       "get": {
         "summary": "List all pets",
         "tags": [
-          "pets"
+          "pets tag"
         ],
         "responses": {
           "200": {
